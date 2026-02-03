@@ -1,0 +1,381 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 40px 30px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+header p {
+  font-size: 1.1em;
+  opacity: 0.9;
+}
+
+/* Main Content */
+main {
+  padding: 40px;
+}
+
+/* Input Section */
+.input-section {
+  background: #f8f9fa;
+  padding: 30px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  border-left: 4px solid #667eea;
+}
+
+.input-section h2 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1.3em;
+}
+
+.help-text {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 8px;
+  font-family: 'Courier New', monospace;
+}
+
+.expression-input {
+  width: 100%;
+  padding: 15px;
+  font-size: 1em;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  margin: 15px 0;
+  font-family: 'Courier New', monospace;
+  transition: border-color 0.3s ease;
+}
+
+.expression-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1em;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 0.95em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  font-weight: 600;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.btn-secondary:hover {
+  background: #45a049;
+  transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* Error Message */
+.error-message {
+  display: none;
+  background: #ffebee;
+  color: #c62828;
+  padding: 15px;
+  border-radius: 6px;
+  border-left: 4px solid #c62828;
+  margin-top: 15px;
+  font-size: 0.95em;
+}
+
+/* Results Section */
+.results-hidden {
+  display: none;
+}
+
+.results-visible {
+  display: block;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Output Sections */
+.output-section {
+  margin-bottom: 50px;
+}
+
+.output-section h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.4em;
+  border-bottom: 3px solid #667eea;
+  padding-bottom: 10px;
+}
+
+.diagram-container {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  overflow-x: auto;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Truth Table Controls */
+.truth-table-controls {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Table Wrapper */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Truth Table Styles */
+.truth-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+  background: white;
+}
+
+.truth-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  position: sticky;
+  top: 0;
+}
+
+.truth-table th {
+  padding: 15px;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+}
+
+.truth-table td {
+  padding: 12px 15px;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+}
+
+.truth-table tbody tr:nth-child(even) {
+  background: #f8f9fa;
+}
+
+.truth-table tbody tr:hover {
+  background: #e8eaf6;
+}
+
+.table-cell {
+  font-family: 'Courier New', monospace;
+  font-weight: 500;
+}
+
+.output-cell {
+  font-weight: 600;
+  color: #333;
+}
+
+.output-true {
+  background: #c8e6c9 !important;
+  color: #1b5e20;
+}
+
+/* Footer */
+footer {
+  background: #f8f9fa;
+  color: #666;
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid #e0e0e0;
+  font-size: 0.9em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.8em;
+  }
+
+  main {
+    padding: 20px;
+  }
+
+  .input-section {
+    padding: 20px;
+  }
+
+  .expression-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .diagram-container {
+    min-height: 150px;
+  }
+
+  .truth-table th,
+  .truth-table td {
+    padding: 10px 8px;
+    font-size: 0.85em;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 10px 15px;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    padding: 20px;
+  }
+
+  header h1 {
+    font-size: 1.4em;
+  }
+
+  main {
+    padding: 15px;
+  }
+
+  .output-section h2 {
+    font-size: 1.1em;
+  }
+
+  .truth-table-controls {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    margin-right: 0;
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #667eea;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #764ba2;
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .input-section {
+    display: none;
+  }
+
+  .container {
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .diagram-container,
+  .table-wrapper {
+    page-break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+}
