@@ -631,7 +631,7 @@ class Visualizer {
 
     // Layout parameters
     const mainCenterX = 600;
-    const inverterX = 1400;
+    const inverterX = 1365;  // Moved left by 35px
     const vddY = 80;
     const gndY = 1120;
     const outputY = 600;
@@ -705,36 +705,21 @@ class Visualizer {
     pdnToGnd.setAttribute('stroke-width', '3');
     g.appendChild(pdnToGnd);
 
-    // F_bar node (intermediate output)
-    const fBarCircle = document.createElementNS(ns, 'circle');
-    fBarCircle.setAttribute('cx', mainCenterX);
-    fBarCircle.setAttribute('cy', outputY);
-    fBarCircle.setAttribute('r', '6');
-    fBarCircle.setAttribute('fill', '#000');
-    g.appendChild(fBarCircle);
-
     // ============================================
-    // CONNECTION LINE TO INVERTER
+    // CONNECTION TO INVERTER GATES
     // ============================================
     const connLineY = outputY;
+    const gateConnectionX = inverterX - 70;  // Position for vertical gate line
+    
+    // Horizontal line from main network to inverter gate area
     const connLine = document.createElementNS(ns, 'line');
     connLine.setAttribute('x1', mainCenterX);
     connLine.setAttribute('y1', connLineY);
-    connLine.setAttribute('x2', inverterX - 120);
+    connLine.setAttribute('x2', gateConnectionX);
     connLine.setAttribute('y2', connLineY);
     connLine.setAttribute('stroke', '#000');
     connLine.setAttribute('stroke-width', '3');
     g.appendChild(connLine);
-
-    // F_bar label
-    const fBarLabel = document.createElementNS(ns, 'text');
-    fBarLabel.setAttribute('x', (mainCenterX + inverterX - 120) / 2);
-    fBarLabel.setAttribute('y', connLineY - 15);
-    fBarLabel.setAttribute('font-size', '16');
-    fBarLabel.setAttribute('font-weight', 'bold');
-    fBarLabel.setAttribute('text-anchor', 'middle');
-    fBarLabel.textContent = 'F̄';
-    g.appendChild(fBarLabel);
 
     // ============================================
     // OUTPUT INVERTER (converts F_bar to F)
@@ -750,27 +735,27 @@ class Visualizer {
     this.drawGNDSymbol(g, inverterX, invGndY);
 
     // PMOS for inverter (between VDD and output)
-    const pmosY = outputY - 80;
-    this.drawCMOSTransistor(g, inverterX, pmosY, 'PMOS', 'F̄');
+    const pmosY = outputY - 90;
+    this.drawCMOSTransistor(g, inverterX, pmosY, 'PMOS', '');
     
     // Connect inverter VDD to PMOS
     const invVddToPmos = document.createElementNS(ns, 'line');
     invVddToPmos.setAttribute('x1', inverterX);
     invVddToPmos.setAttribute('y1', invVddY);
     invVddToPmos.setAttribute('x2', inverterX);
-    invVddToPmos.setAttribute('y2', pmosY - 40);
+    invVddToPmos.setAttribute('y2', pmosY - 50);
     invVddToPmos.setAttribute('stroke', '#000');
     invVddToPmos.setAttribute('stroke-width', '3');
     g.appendChild(invVddToPmos);
 
     // NMOS for inverter (between output and GND)
-    const nmosY = outputY + 80;
-    this.drawCMOSTransistor(g, inverterX, nmosY, 'NMOS', 'F̄');
+    const nmosY = outputY + 90;
+    this.drawCMOSTransistor(g, inverterX, nmosY, 'NMOS', '');
     
     // Connect NMOS to inverter GND
     const invNmosToGnd = document.createElementNS(ns, 'line');
     invNmosToGnd.setAttribute('x1', inverterX);
-    invNmosToGnd.setAttribute('y1', nmosY + 40);
+    invNmosToGnd.setAttribute('y1', nmosY + 50);
     invNmosToGnd.setAttribute('x2', inverterX);
     invNmosToGnd.setAttribute('y2', invGndY - 30);
     invNmosToGnd.setAttribute('stroke', '#000');
@@ -780,7 +765,7 @@ class Visualizer {
     // Connect PMOS to output node
     const pmosToInvOut = document.createElementNS(ns, 'line');
     pmosToInvOut.setAttribute('x1', inverterX);
-    pmosToInvOut.setAttribute('y1', pmosY + 40);
+    pmosToInvOut.setAttribute('y1', pmosY + 50);
     pmosToInvOut.setAttribute('x2', inverterX);
     pmosToInvOut.setAttribute('y2', invMidY);
     pmosToInvOut.setAttribute('stroke', '#000');
@@ -792,23 +777,40 @@ class Visualizer {
     invOutToNmos.setAttribute('x1', inverterX);
     invOutToNmos.setAttribute('y1', invMidY);
     invOutToNmos.setAttribute('x2', inverterX);
-    invOutToNmos.setAttribute('y2', nmosY - 40);
+    invOutToNmos.setAttribute('y2', nmosY - 50);
     invOutToNmos.setAttribute('stroke', '#000');
     invOutToNmos.setAttribute('stroke-width', '3');
     g.appendChild(invOutToNmos);
 
-    // Gate input line to both transistors (from F_bar)
-    const gateLineStartX = inverterX - 120;
-    
-    // Vertical line at gate input
+    // Gate input vertical line connecting to both transistor gates
     const gateVertLine = document.createElementNS(ns, 'line');
-    gateVertLine.setAttribute('x1', gateLineStartX);
+    gateVertLine.setAttribute('x1', gateConnectionX);
     gateVertLine.setAttribute('y1', pmosY);
-    gateVertLine.setAttribute('x2', gateLineStartX);
+    gateVertLine.setAttribute('x2', gateConnectionX);
     gateVertLine.setAttribute('y2', nmosY);
     gateVertLine.setAttribute('stroke', '#000');
-    gateVertLine.setAttribute('stroke-width', '2');
+    gateVertLine.setAttribute('stroke-width', '3');
     g.appendChild(gateVertLine);
+    
+    // Horizontal line to PMOS gate terminal
+    const pmosGateLine = document.createElementNS(ns, 'line');
+    pmosGateLine.setAttribute('x1', gateConnectionX);
+    pmosGateLine.setAttribute('y1', pmosY);
+    pmosGateLine.setAttribute('x2', inverterX - 60);
+    pmosGateLine.setAttribute('y2', pmosY);
+    pmosGateLine.setAttribute('stroke', '#000');
+    pmosGateLine.setAttribute('stroke-width', '3');
+    g.appendChild(pmosGateLine);
+    
+    // Horizontal line to NMOS gate terminal
+    const nmosGateLine = document.createElementNS(ns, 'line');
+    nmosGateLine.setAttribute('x1', gateConnectionX);
+    nmosGateLine.setAttribute('y1', nmosY);
+    nmosGateLine.setAttribute('x2', inverterX - 60);
+    nmosGateLine.setAttribute('y2', nmosY);
+    nmosGateLine.setAttribute('stroke', '#000');
+    nmosGateLine.setAttribute('stroke-width', '3');
+    g.appendChild(nmosGateLine);
 
     // Final output line and node
     const finalOutputX = inverterX + 150;
@@ -833,43 +835,10 @@ class Visualizer {
     const finalOutLabel = document.createElementNS(ns, 'text');
     finalOutLabel.setAttribute('x', finalOutputX + 20);
     finalOutLabel.setAttribute('y', invMidY + 6);
-    finalOutLabel.setAttribute('font-size', '20');
+    finalOutLabel.setAttribute('font-size', '18');
     finalOutLabel.setAttribute('font-weight', 'bold');
-    finalOutLabel.textContent = 'Y = F';
+    finalOutLabel.textContent = 'Output';
     g.appendChild(finalOutLabel);
-
-    // ============================================
-    // LABELS
-    // ============================================
-    
-    // Main network labels
-    const punLabel = document.createElementNS(ns, 'text');
-    punLabel.setAttribute('x', 50);
-    punLabel.setAttribute('y', (vddY + outputY) / 2);
-    punLabel.setAttribute('font-size', '16');
-    punLabel.setAttribute('font-weight', 'bold');
-    punLabel.setAttribute('fill', '#0066cc');
-    punLabel.textContent = 'PUN (PMOS)';
-    g.appendChild(punLabel);
-
-    const pdnLabel = document.createElementNS(ns, 'text');
-    pdnLabel.setAttribute('x', 50);
-    pdnLabel.setAttribute('y', (outputY + gndY) / 2);
-    pdnLabel.setAttribute('font-size', '16');
-    pdnLabel.setAttribute('font-weight', 'bold');
-    pdnLabel.setAttribute('fill', '#cc6600');
-    pdnLabel.textContent = 'PDN (NMOS)';
-    g.appendChild(pdnLabel);
-
-    // Inverter label
-    const invLabel = document.createElementNS(ns, 'text');
-    invLabel.setAttribute('x', inverterX - 40);
-    invLabel.setAttribute('y', invVddY - 60);
-    invLabel.setAttribute('font-size', '16');
-    invLabel.setAttribute('font-weight', 'bold');
-    invLabel.setAttribute('fill', '#006600');
-    invLabel.textContent = 'Output Inverter';
-    g.appendChild(invLabel);
 
     svgElement.appendChild(g);
     this.setupZoomPan(svgElement, g);
@@ -1089,12 +1058,12 @@ class Visualizer {
     const imageName = type === 'PMOS' ? 'pmos.png' : 'nmos.png';
     
     // Transistor image - sized appropriately
-    const imgWidth = 100;
-    const imgHeight = 80;
+    const imgWidth = 120;
+    const imgHeight = 100;
     
     const image = document.createElementNS(ns, 'image');
     image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', `/assets/${imageName}`);
-    image.setAttribute('x', x - imgWidth/2);
+    image.setAttribute('x', x - imgWidth/2-29);
     image.setAttribute('y', y - imgHeight/2);
     image.setAttribute('width', imgWidth);
     image.setAttribute('height', imgHeight);
