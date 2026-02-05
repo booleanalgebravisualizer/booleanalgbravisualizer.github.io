@@ -1,0 +1,117 @@
+/**
+ * Main Application Logic
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  const expressionInput = document.getElementById('expressionInput');
+  const copyLatexBtn = document.getElementById('copyLatexBtn');
+  const copyCSVBtn = document.getElementById('copyCSVBtn');
+  const errorMessage = document.getElementById('errorMessage');
+  const truthTableContainer = document.getElementById('truthTableContainer');
+  const gatesSvg = document.getElementById('gatesSvg');
+  const cmosSvg = document.getElementById('cmosSvg');
+
+  const tabBlockDiagram = document.getElementById('tabBlockDiagram');
+  const tabCMOS = document.getElementById('tabCMOS');
+  const tabTruthTable = document.getElementById('tabTruthTable');
+
+  const blockDiagramTab = document.getElementById('blockDiagramTab');
+  const cmosTab = document.getElementById('cmosTab');
+  const truthTableTab = document.getElementById('truthTableTab');
+
+  // Format help modal elements
+  const formatHelpBtn = document.getElementById('formatHelpBtn');
+  const formatHelpModal = document.getElementById('formatHelpModal');
+  const modalClose = document.querySelector('.modal-close');
+
+  let currentVisualizer = null;
+  let currentLatex = '';
+
+  // Format help modal handlers
+  formatHelpBtn.addEventListener('click', () => {
+    formatHelpModal.style.display = 'block';
+  });
+
+  modalClose.addEventListener('click', () => {
+    formatHelpModal.style.display = 'none';
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === formatHelpModal) {
+      formatHelpModal.style.display = 'none';
+    }
+  });
+
+  // Visualize on Enter key
+  expressionInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      visualize();
+    }
+  });
+
+  function visualize() {
+    const expression = expressionInput.value.trim();
+    if (!expression) {
+      showError('Enter expression');
+      return;
+    }
+
+    try {
+      clearError();
+      const boolExpr = new BooleanExpression(expression);
+      currentVisualizer = new Visualizer(boolExpr);
+      currentLatex = boolExpr.toLatex();
+
+      gatesSvg.setAttribute('viewBox', '0 0 1200 600');
+      currentVisualizer.renderGateDiagram(gatesSvg);
+      
+      cmosSvg.setAttribute('viewBox', '0 0 900 450');
+      currentVisualizer.renderCMOSDiagram(cmosSvg);
+      
+      currentVisualizer.renderTruthTable(truthTableContainer);
+    } catch (error) {
+      showError(error.message);
+    }
+  }
+
+  copyLatexBtn.addEventListener('click', () => {
+    if (currentLatex) {
+      navigator.clipboard.writeText(currentLatex);
+    }
+  });
+
+  copyCSVBtn.addEventListener('click', () => {
+    if (!currentVisualizer) return;
+    const vars = currentVisualizer.variables;
+    const table = currentVisualizer.truthTable;
+    let csv = vars.map(v => v.toUpperCase()).join(',') + ',Output\n';
+    table.forEach(row => {
+      csv += vars.map(v => row[v]).join(',') + ',' + row.output + '\n';
+    });
+    navigator.clipboard.writeText(csv);
+  });
+
+  // Tab switching
+  const tabs = { block: tabBlockDiagram, cmos: tabCMOS, truth: tabTruthTable };
+  const contents = { block: blockDiagramTab, cmos: cmosTab, truth: truthTableTab };
+
+  Object.keys(tabs).forEach(key => {
+    tabs[key].addEventListener('click', () => {
+      Object.values(tabs).forEach(t => t.classList.remove('active'));
+      Object.values(contents).forEach(c => c.style.display = 'none');
+      tabs[key].classList.add('active');
+      contents[key].style.display = 'block';
+    });
+  });
+
+  function showError(msg) {
+    errorMessage.textContent = msg;
+    errorMessage.style.display = 'block';
+  }
+
+  function clearError() {
+    errorMessage.style.display = 'none';
+  }
+
+  console.log('Boolean Algebra Visualizer loaded');
+});

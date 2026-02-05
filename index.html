@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Boolean Algebra Visualizer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Boolean Algebra Visualizer</h1>
+  
+  <div class="input-row">
+    <input 
+      type="text" 
+      id="expressionInput" 
+      placeholder="Enter boolean expression (e.g., a*b+!c or a and b xor c)"
+    >
+    <button id="formatHelpBtn" class="help-btn" title="Show expected formatting">?</button>
+    <button id="copyLatexBtn">Copy LaTeX</button>
+  </div>
+
+  <!-- Formatting Help Modal -->
+  <div id="formatHelpModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2>Expected Formatting</h2>
+      <div class="format-section">
+        <h3>Grouping</h3>
+        <p><code>(a*b)+c</code></p>
+      </div>
+      <div class="format-section">
+        <h3>NOT (Negation)</h3>
+        <p><code>!a</code> &nbsp; <code>'a</code> &nbsp; <code>not a</code></p>
+      </div>
+      <div class="format-section">
+        <h3>AND</h3>
+        <p><code>a*b</code> &nbsp; <code>a and b</code> &nbsp; <code>a&amp;b</code></p>
+      </div>
+      <div class="format-section">
+        <h3>OR</h3>
+        <p><code>a+b</code> &nbsp; <code>a or b</code> &nbsp; <code>a|b</code></p>
+      </div>
+      <div class="format-section">
+        <h3>NAND</h3>
+        <p><code>a⊼b</code> &nbsp; <code>a nand b</code> &nbsp; <code>a↑b</code></p>
+      </div>
+      <div class="format-section">
+        <h3>NOR</h3>
+        <p><code>a⊽b</code> &nbsp; <code>a nor b</code> &nbsp; <code>a↓b</code></p>
+      </div>
+      <div class="format-section">
+        <h3>XOR</h3>
+        <p><code>a⊕b</code> &nbsp; <code>a xor b</code> &nbsp; <code>a^b</code></p>
+      </div>
+      <div class="format-section">
+        <h3>XNOR</h3>
+        <p><code>a⊙b</code> &nbsp; <code>a xnor b</code> &nbsp; <code>a≡b</code></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="errorMessage" class="error"></div>
+
+  <div class="tabs">
+    <button id="tabBlockDiagram" class="tab-button active">block diagram</button>
+    <button id="tabCMOS" class="tab-button">cmos</button>
+    <button id="tabTruthTable" class="tab-button">truth table</button>
+  </div>
+
+  <div id="blockDiagramTab" class="tab-content">
+    <svg id="gatesSvg"></svg>
+  </div>
+
+  <div id="cmosTab" class="tab-content" style="display:none;">
+    <svg id="cmosSvg"></svg>
+  </div>
+
+  <div id="truthTableTab" class="tab-content" style="display:none;">
+    <button id="copyCSVBtn">Copy as CSV</button>
+    <div id="truthTableContainer"></div>
+  </div>
+
+  <script src="parser.js"></script>
+  <script src="visualizer.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
