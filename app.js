@@ -5,7 +5,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const expressionInput = document.getElementById('expressionInput');
   const copyLatexBtn = document.getElementById('copyLatexBtn');
-  const copyCSVBtn = document.getElementById('copyCSVBtn');
+  const copyTableBtn = document.getElementById('copyTableBtn');
   const errorMessage = document.getElementById('errorMessage');
   const truthTableContainer = document.getElementById('truthTableContainer');
   const gatesSvg = document.getElementById('gatesSvg');
@@ -80,15 +80,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  copyCSVBtn.addEventListener('click', () => {
+  copyTableBtn.addEventListener('click', () => {
     if (!currentVisualizer) return;
     const vars = currentVisualizer.variables;
     const table = currentVisualizer.truthTable;
-    let csv = vars.map(v => v.toUpperCase()).join(',') + ',Output\n';
+    let text = vars.map(v => v.toUpperCase()).join('\t') + '\tOutput\n';
     table.forEach(row => {
-      csv += vars.map(v => row[v]).join(',') + ',' + row.output + '\n';
+      text += vars.map(v => row[v]).join('\t') + '\t' + row.output + '\n';
     });
-    navigator.clipboard.writeText(csv);
+    navigator.clipboard.writeText(text);
   });
 
   // Tab switching
