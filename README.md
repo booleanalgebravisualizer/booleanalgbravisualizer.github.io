@@ -1,6 +1,6 @@
 # Boolean Algebra Visualizer
 
-[![Link to website](https://booleanalgbravisualizer.github.io/))
+[booleanalgbravisualizer.github.io](https://booleanalgbravisualizer.github.io/)
 
 A tool to visualize, analyze, and simplify boolean expressions. This visualizer provides real time generation of logic circuits, CMOS layouts, truth tables, and Karnaugh maps.
 
