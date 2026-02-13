@@ -1,6 +1,6 @@
 # Boolean Algebra Visualizer
 
-[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)]([https://DeanKuruzovich.github.io/BooleanAlgebraVisualizer/](https://booleanalgbravisualizer.github.io/))
+[![Link to website](https://booleanalgbravisualizer.github.io/))
 
 A tool to visualize, analyze, and simplify boolean expressions. This visualizer provides real time generation of logic circuits, CMOS layouts, truth tables, and Karnaugh maps.
 
@@ -22,7 +22,7 @@ The visualizer uses a robust recursive descent parser that supports a wide varie
 - **Truth Tables**: Precise evaluation of all variable combinations.
 - **Karnaugh Maps (K-Maps)**: Interactive maps supporting 2 to 8+ variables using standard Gray code ordering and nested grid layouts for higher dimensions.
 
-### 📋 Clipboard & Export Tools
+###  Clipboard & Export Tools
 - **Rich Text Copy**: Format tables directly for pasting into Google Docs or Microsoft Word with styles preserved.
 - **CSV Export**: Download truth tables and K-maps for spreadsheet analysis.
 - **LaTeX Export**: Generate LaTeX code for inclusion in academic papers or reports.
