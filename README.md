@@ -1,6 +1,6 @@
 # Boolean Algebra Visualizer
 
-[booleanalgbravisualizer.github.io](https://booleanalgebravisualizer.github.io/)
+[booleanalgebravisualizer.github.io](https://booleanalgebravisualizer.github.io/)
 
 A tool to visualize and generate diagrams of boolean expressions.
 
